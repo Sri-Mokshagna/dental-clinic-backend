@@ -158,6 +158,16 @@ public class WhatsAppSender {
         System.err.println("❌ Failed to send WhatsApp file template: " + e.getMessage());
     }
 }
+    // Add these methods inside WhatsAppSender
+public void sendTemplate(String to, String templateName, Map<String,String> variables) {
+    // Map to existing method
+    sendAppointmentUpdate(to, variables.get("1"), variables.get("2"), variables.getOrDefault("3",""));
+}
+
+public void sendTemplateWithMedia(String to, String templateName, Map<String,String> variables, String mediaUrl) {
+    sendFileTemplate(to, templateName, variables.get("1"), variables.get("2"), variables.getOrDefault("3","file.pdf"), variables.getOrDefault("4","pdf"), mediaUrl);
+}
+
 
 }
 
