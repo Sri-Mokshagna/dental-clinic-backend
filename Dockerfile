@@ -1,24 +1,21 @@
 # ---------- Build Stage ----------
-FROM maven:3.9.4-eclipse-temurin-17 AS build
-WORKDIR /workspace
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
-# Copy pom.xml and download dependencies (caching helps speed up rebuilds)
+WORKDIR /app
+
+# Copy pom.xml and download dependencies first
 COPY pom.xml .
-RUN mvn -B dependency:go-offline
+RUN mvn dependency:go-offline -B
 
 # Copy source code and build jar
 COPY src ./src
 RUN mvn -B package -DskipTests
 
 # ---------- Runtime Stage ----------
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
+
 WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 
-# Copy only the built JAR into runtime image
-COPY --from=build /workspace/target/*.jar app.jar
-
-# Render provides PORT as env variable (default 10000)
 EXPOSE 10000
-
-# Run Spring Boot application
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
