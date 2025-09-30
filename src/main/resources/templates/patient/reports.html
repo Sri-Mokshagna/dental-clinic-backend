@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Reports</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+<div th:replace="layout/header :: header"></div>
+
+<h2>My Medical Reports</h2>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Report Date</th>
+        <th>Description</th>
+        <th>Doctor</th>
+        <th>Download</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="report : ${reports}">
+        <td th:text="${#temporals.format(report.date, 'dd-MM-yyyy')}"></td>
+        <td th:text="${report.description}"></td>
+        <td th:text="${report.doctor.fullName}"></td>
+        <td><a th:href="@{/reports/download/{id}(id=${report.id})}">Download</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/patient/dashboard}">Back to Dashboard</a>
+
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Ignore environment variables files
+.env
+.env.local
+.env.*.local
+
+# Ignore secret key files
+secret.key
+*.pem
+
+# Ignore config files with sensitive data
+config/*.json
+
+# Ignore logs and caches
+*.log
+cache/

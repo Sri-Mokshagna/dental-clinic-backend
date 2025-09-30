@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="sidebar">
+    <div class="offcanvas offcanvas-start bg-light shadow" tabindex="-1" id="sidebarMenu">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-primary">Navigation</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column p-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link link-dark">🏠 Home</a>
+                </li>
+
+                <!-- Role-based navigation -->
+                <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    <a th:href="@{/admin/dashboard}" class="nav-link">🛠 Admin Dashboard</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''DOCTOR'')')}">
+                    <a th:href="@{/doctor/dashboard}" class="nav-link">👨‍⚕️ Doctor Dashboard</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''STAFF'')')}">
+                    <a th:href="@{/staff/dashboard}" class="nav-link">👩‍💼 Staff Dashboard</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''PATIENT'')')}">
+                    <a th:href="@{/patient/dashboard}" class="nav-link">🧑‍🤝‍🧑 Patient Dashboard</a>
+                </li>
+            </ul>
+            <hr>
+            <form th:action="@{/auth/logout}" method="post">
+    <button class="btn btn-outline-danger w-100">🚪 Logout</button>
+</form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

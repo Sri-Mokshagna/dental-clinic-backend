@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Feedback</title></head>
+<body>
+<div th:replace="layout/header :: header"></div>
+<div th:replace="layout/sidebar :: sidebar"></div>
+
+<div class="content">
+    <h2>Patient Feedback</h2>
+    <form th:action="@{/doctor/feedback}" method="post" th:object="${feedback}">
+        <label>Feedback:</label>
+        <textarea th:field="*{message}" required></textarea>
+        <div th:errors="*{message}"></div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Past Feedback</h3>
+    <ul>
+        <li th:each="fb : ${feedbackList}" th:text="${fb.message}"></li>
+    </ul>
+</div>
+
+<div th:replace="layout/footer :: footer"></div>
+</body>
+</html>

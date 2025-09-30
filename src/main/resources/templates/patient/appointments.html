@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My Appointments | Dental Clinic</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- 🔹 Use common header -->
+<div th:replace="layout/header :: header"></div>
+
+<div class="container py-4">
+    <h2 class="mb-3">My Appointments</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Treatment</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appt : ${appointments}">
+            <td th:text="${#temporals.format(appt.date, 'dd-MM-yyyy')}"></td>
+            <td th:text="${appt.doctor.fullName}"></td>
+            <td th:text="${appt.treatment}"></td>
+            <td>₹<span th:text="${appt.amount}"></span></td>
+            <td>
+                <span class="badge"
+                      th:classappend="${appt.status == 'Completed'} ? 'bg-success' :
+                                      ${appt.status == 'Pending'} ? 'bg-warning text-dark' :
+                                      'bg-secondary'"
+                      th:text="${appt.status}">
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-primary" th:href="@{/patient/dashboard}">Back to Dashboard</a>
+</div>
+
+<!-- 🔹 Use common footer -->
+<div th:replace="layout/footer :: footer"></div>
+
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Manage Appointments</title><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="layout/layout :: header"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-none d-lg-block col-lg-3 col-xl-2 p-0">
+            <div th:replace="layout/layout :: sidebar"></div>
+        </div>
+        <div class="col-12 col-lg-9 col-xl-10 ms-lg-auto p-4">
+            <div class="d-lg-none mb-3">
+                <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#appSidebar">Open Menu</button>
+                <div th:replace="layout/layout :: sidebar"></div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="text-primary">Appointments</h3>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-striped align-middle">
+                            <thead>
+                            <tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date/Time</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="a : ${appointments}">
+                                <td th:text="${a.id}">1</td>
+                                <td th:text="${a.patient != null ? a.patient.fullName : '-'}">Patient</td>
+                                <td th:text="${a.doctor != null ? a.doctor.fullName : '-'}">Doctor</td>
+                                <td th:text="${#temporals.format(a.appointmentDate, 'yyyy-MM-dd HH:mm')}">date</td>
+                                <td th:text="${a.status}">status</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout/layout :: footer"></div>
+</body>
+</html>
